@@ -1,4 +1,4 @@
-(defproject mdc-util "0.2.0-SNAPSHOT"
+(defproject mdc-util "0.2.0"
   :description "A small utility library for use of MDC with tools.logging"
   :dependencies [[org.clojure/clojure "1.9.0" :scope "provided"]]
   :license {:name "MIT License"
