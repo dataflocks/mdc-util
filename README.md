@@ -35,3 +35,8 @@ The drawback of `with-safe-context` is that currently a backup of the current
 context is being held and recovered at the end of the form. These maps,
 unfortunately, have to be *copied* every time, which might result in a quite
 noticable performance overhead in some scenarios.
+
+Bonus feature: `with-weak-context`
+
+This will only add the specified keys if they're not already present in the MDC (ie shadowing properties
+are reversed) - cleans up keys that were set.

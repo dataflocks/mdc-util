@@ -33,3 +33,14 @@
        ~@body
        (finally
          (MDC/setContextMap ^Map old-context#)))))
+
+(defmacro with-weak-context [mdc-provider & body]
+  `(let [ctx# (mdc ~mdc-provider)
+         applicable# (vec (filter (comp nil? #(MDC/get %)) (keys ctx#)))]
+     (doseq [[name# value#] (select-keys ctx# applicable#)]
+       (MDC/put ^String name# ^String value#))
+     (try
+       ~@body
+       (finally
+         (doseq [name# applicable#]
+           (MDC/remove ^String name#))))))

@@ -14,6 +14,11 @@
     (with-safe-context {"test-key" "test-value"}
       (is (= "test-value" (MDC/get "test-key"))))
     (is (nil? (MDC/get "test-key"))))
+  (testing "weak context"
+    (is (nil? (MDC/get "test-key")))
+    (with-weak-context {"test-key" "test-value"}
+      (is (= "test-value" (MDC/get "test-key"))))
+    (is (nil? (MDC/get "test-key"))))
   (testing "nil safe"
     (is (nil? (MDC/get "test-key")))
     (with-context {"test-key" nil}
@@ -46,4 +51,9 @@
       (is (= "value-1" (MDC/get "test-key")))
       (with-safe-context {"test-key" "value-2"}
         (is (= "value-2" (MDC/get "test-key"))))
-      (is (= "value-1" (MDC/get "test-key"))))))
+      (is (= "value-1" (MDC/get "test-key")))))
+  (testing "weak context"
+    (with-context {"test-key" "value-1"}
+      (with-weak-context {"test-key" "value-2"}
+        (is (= "value-1" (MDC/get "test-key")))))
+    (is (nil? (MDC/get "test-key")))))
